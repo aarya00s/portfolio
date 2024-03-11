@@ -29,11 +29,11 @@ export default class Wagon {
         this.verticalProgress = 0;
         this.maxBounds = { minX: -800, maxX: 800, minZ: -800, maxZ: 800 };
         this.textMap = {
-            'Gate1': "Welcome, press M \n or go to the panel above\n to move the boat",
-            'Gate2': "I have reached Gate 2",
-            "INDIA": "I have reached India \n this is where\n I did my \n initial Education\n",
-            "npm run build": "I have reached Trinity"
-        }; // Initialize a progress variable to control the movement along the path
+            'Gate1': "Welcome. Press 'M' or use the panel above to navigate the boat.",
+            'Gate2': "Proficient in Python, C++, C, Java, JavaScript, and more.",
+            "INDIA": "Completed internships as a Full Stack Engineer and Front-End Intern in India.",
+            "trinity": "Recently graduated from Trinity College with a Bachelor's in Engineering."
+        }; // Initialize a progress variable to control movement along the path.
     }
     addModel() {
         this.models = {};
@@ -200,7 +200,7 @@ export default class Wagon {
                     // if (modelName == "trinity") {
                     //     //distance);
                     // }
-                    if (distance < 70) {
+                    if (distance < 100) {
                         //`Close to ${modelName}`);
 
                         if (this.textMap[modelName]) {
