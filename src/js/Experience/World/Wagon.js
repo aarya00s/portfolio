@@ -55,19 +55,6 @@ export default class Wagon {
             "row2": "wagonTexturePack1",
             "INDIA": "wagonTexturePack4",
             "trinity": "wagonTexturePack5"
-            // "book": "wagonTexturePack2",
-            // "island": "wagonTexturePack3",
-            // "lectern": "wagonTexturePack3",
-            // "natural_arch":"wagonTexturePack3",
-            // "Lotus":"wagonTexturePack6",
-            // "Lotus001":"wagonTexturePack6",
-            // "Lotus002":"wagonTexturePack6",
-            // "Lotus003":"wagonTexturePack6",
-            // "Lotus004":"wagonTexturePack6",
-            // "Torii_Mesh":"wagonTexturePack4",
-            // "Cube":"wagonTexturePack1",
-            // "Cube001":"wagonTexturePack8",
-            // "Cube002":"wagonTexturePack8"
         };
         modelNames.forEach(name => {
             const model = this.resources.items.wagonModel.scene.children.find((child) => child.name === name);
@@ -104,26 +91,26 @@ export default class Wagon {
             this.models[name] = model;
         });
         if (this.models.Gate1 && this.models.Gate2) {
-          
+
             fetch('/path.json')
-            .then(response => response.json())
-            .then(data => {
-             
-                // Initialize vectors as an array
-                var vectors = [];
-                data.points.forEach(point => {
-                   
-                    // Push new THREE.Vector3 objects into the vectors array
-                    vectors.push(new THREE.Vector3(point.x, point.y, point.z));
-                });
-                // Log the converted vectors to ensure they're correct
-              
-                // Create a CatmullRomCurve3 with these points
-                this.boatPath = new THREE.CatmullRomCurve3(vectors);
-                // Now, this.boatPath can be used for movement or visualization
-            })
-            .catch(error => console.error('Error loading or processing path data:', error));
-             
+                .then(response => response.json())
+                .then(data => {
+
+                    // Initialize vectors as an array
+                    var vectors = [];
+                    data.points.forEach(point => {
+
+                        // Push new THREE.Vector3 objects into the vectors array
+                        vectors.push(new THREE.Vector3(point.x, point.y, point.z));
+                    });
+                    // Log the converted vectors to ensure they're correct
+
+                    // Create a CatmullRomCurve3 with these points
+                    this.boatPath = new THREE.CatmullRomCurve3(vectors);
+                    // Now, this.boatPath can be used for movement or visualization
+                })
+                .catch(error => console.error('Error loading or processing path data:', error));
+
         }
         if (this.models.boat && this.models.row1) {
             this.models.row1.rotation.y = THREE.MathUtils.degToRad(110); // Adjust this angle as needed
@@ -166,6 +153,7 @@ export default class Wagon {
             // Assuming boatProgress has been updated based on input
             this.deltaPosition = this.calculateDeltaPosition(this.horizontalProgress, this.verticalProgress);
             boatPosition = new THREE.Vector3().addVectors(this.models.boat.position, this.deltaPosition);
+      
 
         }
 
@@ -176,10 +164,10 @@ export default class Wagon {
             const offset = new THREE.Vector3(0, 0, 0); // Adjust as needed
             var boatp = this.models.boat.position.clone();
             const desiredCameraPosition = boatp.add(offset);
-            
+ 
             // Smoothly interpolate the camera's position
             this.experience.camera.instance.position.lerp(desiredCameraPosition, 0.05); // Adjust the lerp factor for smoothness
-            
+
             // Make the camera look at the boat
             this.experience.camera.instance.lookAt(desiredCameraPosition);
             [this.models.row1, this.models.row2].forEach(row => {
@@ -197,15 +185,11 @@ export default class Wagon {
                 if (model) {
 
                     const distance = model.position.distanceTo(this.models.boat.position);
-                    // if (modelName == "trinity") {
-                    //     //distance);
-                    // }
                     if (distance < 100) {
-                        //`Close to ${modelName}`);
 
                         if (this.textMap[modelName]) {
-                           this.updateTextPanel(this.textMap[modelName])
-                            // remove comment to genrate flying fireflies text
+                            this.updateTextPanel(this.textMap[modelName])
+                            // remove comment to genrate flying fireflies text Add imports and 
                             // this.fireflies.setTextAsFireflies(this.textMap[modelName], { ...this.models.boat.position, scale: 90 })
                         }
                     }
@@ -214,11 +198,11 @@ export default class Wagon {
         }
 
     } updateTextPanel(text) {
-	
-		const panel = document.getElementById('text-panel');
-		if(panel) {
-			panel.innerText = text;
-		}
-	}
+
+        const panel = document.getElementById('text-panel');
+        if (panel) {
+            panel.innerText = text;
+        }
+    }
     destroy() { }
 }

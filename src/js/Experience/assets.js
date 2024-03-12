@@ -9,7 +9,7 @@ export default [
 			
 			{ name: 'wagonTexturePack1', source: '/boat.jpg', type: 'texture' },
 			{ name: 'wagonTexturePack2', source: '/Gate1.jpg', type: 'texture' },
-			{ name: 'wagonTexturePack3', source: '/Gate02.png', type: 'texture' },
+			{ name: 'wagonTexturePack3', source: '/Gate02.jpg', type: 'texture' },
 			{ name: 'wagonTexturePack4', source: '/india.jpg', type: 'texture' },
 			{ name: 'wagonTexturePack5', source: '/trinity_texture.jpg', type: 'texture' },
 	
