@@ -103,7 +103,7 @@ export default class Wagon {
             this.scene.add(model);
             this.models[name] = model;
         });
-     
+        if (this.models.Gate1 && this.models.Gate2) {
           
             fetch('/path.json')
             .then(response => response.json())
@@ -124,7 +124,7 @@ export default class Wagon {
             })
             .catch(error => console.error('Error loading or processing path data:', error));
              
-        
+        }
         if (this.models.boat && this.models.row1) {
             this.models.row1.rotation.y = THREE.MathUtils.degToRad(110); // Adjust this angle as needed
 
