@@ -149,7 +149,6 @@
             this.controls.update();
 
             this.stats = Experience.instance.debug;
-console.log(this.stats)
                 if (this.stats) {
                     this.stats.skyFolder.addBinding(this.parameters, 'elevation', { min: 0, max: 90, step: 0.1, label: 'Elevation' }).on('change', this.updateSun);
                     this.stats.skyFolder.addBinding(this.parameters, 'azimuth', { min: -180, max: 180, step: 0.1, label: 'Azimuth' }).on('change', this.updateSun);
