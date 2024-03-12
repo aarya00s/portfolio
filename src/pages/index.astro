@@ -4,20 +4,24 @@ import ScriptComponent from "../js/script.jsx"
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
+	<meta charset="utf-8" />
     <meta content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
     <title>Aarya Sharma Portfolio</title>
+    <!-- Preload primary fonts -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Ubuntu&amp;display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Ubuntu&amp;display=swap" rel="stylesheet"></noscript>
 
-    <!-- Styles -->
-    <!-- <link href="../../css/main.css" rel="stylesheet" type="text/css" /> -->
-    <!-- <link href="./css/style.css" rel="stylesheet" /> -->
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.8.7/nipplejs.min.js"></script>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Amatic+SC" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet"></noscript>
 
+    <!-- Defer JavaScript libraries -->
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/nipplejs/0.8.7/nipplejs.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Defer font-awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></noscript>
+
     <style>
         @import url(../../src/css/normalize.css);
 
@@ -1206,7 +1210,7 @@ iframe#viewer {
 
     <div class="experience"></div>
     <div class="loader">
-        <img height="35%" class="gif" src="/loading.gif"/>
+        <img class="gif" src="/loading.gif"/>
 		<div class="timer" style="display: none;" id="htmlLoaderTimer"></div>
     </div>
     <div class="credits unvisible">

@@ -29,7 +29,7 @@ export default class Wagon {
         this.verticalProgress = 0;
         this.maxBounds = { minX: -800, maxX: 800, minZ: -800, maxZ: 800 };
         this.textMap = {
-            'Gate1': "Welcome. Press 'M' or use the panel above to navigate the boat.",
+            'Gate1': "Welcome aboard! Press 'M' or interact with the control panel above For a hidden surprise, try clicking around the bottom of the screen to discover and use the joystick for navigation. Enjoy the voyage!",
             'Gate2': "Proficient in Python, C++, C, Java, JavaScript, and more.",
             "INDIA": "Completed internships as a Full Stack Engineer and Front-End Intern in India.",
             "trinity": "Recently graduated from Trinity College with a Bachelor's in Engineering."
