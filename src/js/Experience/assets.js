@@ -5,13 +5,13 @@ export default [
 		data: {},
 		items: [
 			// Base
-			{ name: 'wagonModel', source: '../../../public/models_new.glb', type: 'glb' },
+			{ name: 'wagonModel', source: '/models_new.glb', type: 'glb' },
 			
-			{ name: 'wagonTexturePack1', source: '../../../public/boat.jpg', type: 'texture' },
-			{ name: 'wagonTexturePack2', source: '../../../public/Gate1.jpg', type: 'texture' },
-			{ name: 'wagonTexturePack3', source: '../../../public/Gate02.png', type: 'texture' },
-			{ name: 'wagonTexturePack4', source: '../../../public/india.jpg', type: 'texture' },
-			{ name: 'wagonTexturePack5', source: '../../../public/trinity_texture.jpg', type: 'texture' },
+			{ name: 'wagonTexturePack1', source: '/boat.jpg', type: 'texture' },
+			{ name: 'wagonTexturePack2', source: '/Gate1.jpg', type: 'texture' },
+			{ name: 'wagonTexturePack3', source: '/Gate02.png', type: 'texture' },
+			{ name: 'wagonTexturePack4', source: '/india.jpg', type: 'texture' },
+			{ name: 'wagonTexturePack5', source: '/trinity_texture.jpg', type: 'texture' },
 	
 			// { name: 'wagonTexturePack5', source: '/assets/lectern_book_BaseColor.jpg', type: 'texture' },
 			// { name: 'wagonTexturePack6', source: '/assets/lotus.jpg', type: 'texture' },

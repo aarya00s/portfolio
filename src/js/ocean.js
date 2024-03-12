@@ -3,16 +3,6 @@
     import { Water } from './Experience/Utils/Water.js';
     import { Sky } from './Experience/Utils/Sky.js';
     import Experience from './Experience/Experience.js'
-    import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
-    import perlin, { material, options } from "./Experience/Utils/perlin";
-    let sun;
-    let sunObject, sunGeo;
-    let skyParams = {
-        'Morning': { turbidity: 10, rayleigh: 2, elevation: 2, azimuth: 0.25, exposure: 0.7, mieCoefficient: 0.005, mieDirectionalG: 0.7 },
-        'Noon': { turbidity: 4, rayleigh: 1, elevation: 90, azimuth: 0.5, exposure: 1, mieCoefficient: 0.005, mieDirectionalG: 0.8 },
-        'Evening': { turbidity: 10, rayleigh: 2, elevation: 2, azimuth: 0.75, exposure: 0.7, mieCoefficient: 0.005, mieDirectionalG: 0.7 },
-        'Night': { turbidity: 10, rayleigh: 2, elevation: 0, azimuth: 0, exposure: 0.1, mieCoefficient: 0.005, mieDirectionalG: 0.7 }
-    };
     export default class OceanScene {
         constructor() {
     

@@ -105,7 +105,7 @@ export default class Wagon {
         });
         if (this.models.Gate1 && this.models.Gate2) {
           
-            fetch('.../../../public/path.json')
+            fetch('/path.json')
             .then(response => response.json())
             .then(data => {
              
