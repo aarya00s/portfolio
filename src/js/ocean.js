@@ -1,5 +1,5 @@
     import * as THREE from 'three';
-    import { OrbitControls } from './Experience/Utils/OrbitControls.js';
+    import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
     import { Water } from './Experience/Utils/Water.js';
     import { Sky } from './Experience/Utils/Sky.js';
     import Experience from './Experience/Experience.js'
