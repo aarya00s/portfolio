@@ -24,12 +24,15 @@ function handleMouseMove(event) {
 
     const boatMovementChanged = experience.world.ocean.parameters.boatMovement !== boatMovement;
     boatMovement = experience.world.ocean.parameters.boatMovement;
+    console.log( experience.world.ocean.parameters.boatMovement);
+    toggleJoystick( experience.world.ocean.parameters.boatMovement);
     let movementY = 0;
 
     // 
     if (boatMovementChanged) {
 
         document.dispatchEvent(new CustomEvent('MoveBoat', { detail: { event: event } }));
+        
     }
 
     if (boatMovement) {
@@ -107,8 +110,8 @@ function toggleFollowMode(event) {
     // });
 
     if (event.key === 'm' || event.key === 'M') {
-        Mpressed = !Mpressed;
-        toggleJoystick(Mpressed);
+        toggleMPressed(Mpressed);
+
     }
     if (experience.world.wagon.models) {
 
@@ -134,7 +137,10 @@ function toggleFollowMode(event) {
     }
 }
 let joystick = null; // Keep a reference to the joystick
-
+function toggleMPressed(Mpressed){
+    Mpressed=!Mpressed;
+    toggleJoystick(Mpressed);
+}
 function toggleJoystick(enabled) {
     // Clean up if disabling and joystick already exists
     if (!enabled && joystick) {
