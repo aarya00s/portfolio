@@ -54,60 +54,61 @@ function toggleFollowMode(event) {
         size=100;
     }
    
-    var sampleJoystick = {
-        zone: document.getElementById("text-panel"),
-        mode:'dynamic',
-        position: {
-          left: '50%',
-          top: '50%'
-        },
-        size: 150,
-        color: 'black'
-    };
+    // var sampleJoystick = {
+    //     zone: document.getElementById("text-panel"),
+    //     mode:'dynamic',
+    //     position: {
+    //       left: '50%',
+    //       top: '50%'
+    //     },
+    //     size: 150,
+    //     color: 'black'
+    // };
     
-    var joystick = nipplejs.create(sampleJoystick);
+    // var joystick = nipplejs.create(sampleJoystick);
 
 
 
-    joystick.on('move', function (evt, data) {
-        if (!data.direction) return;
+    // joystick.on('move', function (evt, data) {
+    //     if (!data.direction) return;
 
-        let deltaX = 0, deltaZ = 0;
-        var maxSpeed =0.0008
-        // if(window.innerWidth<600){
-        //  maxSpeed = 0.005; // Adjust based on your needs
-        // }
-        // else{
-        //     maxSpeed=0.006
-        // }
-        switch (data.direction.angle) {
-            case 'up':
-                deltaZ =  maxSpeed;
-                break;
-            case 'down':
-                deltaZ = -maxSpeed;
-                break;
-            case 'left':
-                deltaX = maxSpeed;
-                break;
-            case 'right':
-                deltaX = -maxSpeed;
-                break;
-            default:
-                break;
-        }
+    //     let deltaX = 0, deltaZ = 0;
+    //     var maxSpeed =0.0008
+    //     // if(window.innerWidth<600){
+    //     //  maxSpeed = 0.005; // Adjust based on your needs
+    //     // }
+    //     // else{
+    //     //     maxSpeed=0.006
+    //     // }
+    //     switch (data.direction.angle) {
+    //         case 'up':
+    //             deltaZ =  maxSpeed;
+    //             break;
+    //         case 'down':
+    //             deltaZ = -maxSpeed;
+    //             break;
+    //         case 'left':
+    //             deltaX = maxSpeed;
+    //             break;
+    //         case 'right':
+    //             deltaX = -maxSpeed;
+    //             break;
+    //         default:
+    //             break;
+    //     }
 
-        // Update the horizontal and vertical progres
-        experience.world.wagon.boatProgress+=deltaZ
-        experience.world.wagon.horizontalProgress += deltaX;
-        experience.world.wagon.verticalProgress += deltaZ;
+    //     // Update the horizontal and vertical progres
+    //     experience.world.wagon.boatProgress+=deltaZ
+    //     experience.world.wagon.horizontalProgress += deltaX;
+    //     experience.world.wagon.verticalProgress += deltaZ;
 
-        // Apply changes
-        experience.world.wagon.update();
-    });
+    //     // Apply changes
+    //     experience.world.wagon.update();
+    // });
 
     if (event.key === 'm' || event.key === 'M') {
-        Mpressed = !Mpressed
+        Mpressed = !Mpressed;
+        toggleJoystick(Mpressed);
     }
     if (experience.world.wagon.models) {
 
@@ -130,6 +131,59 @@ function toggleFollowMode(event) {
             experience.world.wagon.update();
         }
 
+    }
+}
+let joystick = null; // Keep a reference to the joystick
+
+function toggleJoystick(enabled) {
+    // Clean up if disabling and joystick already exists
+    if (!enabled && joystick) {
+        joystick.destroy();
+        joystick = null;
+        return;
+    }
+
+    // Proceed to create the joystick if enabled
+    if (enabled) {
+        let size = 150;
+        if(window.innerWidth < 600){
+            size = 100;
+        }
+   
+        var sampleJoystick = {
+            zone: document.getElementById("text-panel"),
+            mode: 'dynamic',
+            position: { left: '50%', top: '50%' },
+            size: size,
+            color: 'black'
+        };
+
+        // Ensure we don't create multiple instances
+        if (!joystick) {
+            joystick = nipplejs.create(sampleJoystick);
+
+            joystick.on('move', function (evt, data) {
+                if (!data.direction) return;
+
+                let deltaX = 0, deltaZ = 0;
+                var maxSpeed = 0.0008;
+
+                switch (data.direction.angle) {
+                    case 'up': deltaZ = maxSpeed; break;
+                    case 'down': deltaZ = -maxSpeed; break;
+                    case 'left': deltaX = -maxSpeed; break;
+                    case 'right': deltaX = maxSpeed; break;
+                    default: break;
+                }
+
+                // Assuming `experience` is globally accessible or passed correctly
+                experience.world.wagon.boatProgress+=deltaZ
+                    experience.world.wagon.horizontalProgress += deltaX;
+                    experience.world.wagon.verticalProgress += deltaZ;
+            
+                experience.world.wagon.update();
+            });
+        }
     }
 }
 // if (window.innerWidth < 600) {

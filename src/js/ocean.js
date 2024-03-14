@@ -68,7 +68,7 @@
                 {
                     textureWidth: 1024,
                     textureHeight: 1024,
-                    waterNormals: new THREE.TextureLoader().load('./waternormals.jpg', function (texture) {
+                    waterNormals: new THREE.TextureLoader().load('./waternormals.webp', function (texture) {
                         texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                     }),
                     sunDirection: new THREE.Vector3(),

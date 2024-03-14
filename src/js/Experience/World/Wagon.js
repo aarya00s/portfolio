@@ -113,16 +113,16 @@ export default class Wagon {
 
         }
         if (this.models.boat && this.models.row1) {
-            this.models.row1.rotation.y = THREE.MathUtils.degToRad(110); // Adjust this angle as needed
+            this.models.row2.rotation.y = THREE.MathUtils.degToRad(110); // Adjust this angle as needed
 
-            this.models.row1.position.set(.6, -3, .4);
-            // Attach the row1 to the boat as a child
-            this.models.boat.add(this.models.row1);
-            this.models.row2.rotation.y = THREE.MathUtils.degToRad(40); // Adjust this angle as needed
-            this.models.row2.rotation.x = THREE.MathUtils.degToRad(180)
-            this.models.row2.position.set(.6, -3, -.7);
+            this.models.row2.position.set(.6, -3, .4);
             // Attach the row1 to the boat as a child
             this.models.boat.add(this.models.row2);
+            this.models.row1.rotation.y = THREE.MathUtils.degToRad(40); // Adjust this angle as needed
+            this.models.row1.rotation.x = THREE.MathUtils.degToRad(180)
+            this.models.row1.position.set(.6, -3, -.7);
+            // Attach the row1 to the boat as a child
+            this.models.boat.add(this.models.row1);
         }
     }
     toggleFreeMoving() {
@@ -198,7 +198,7 @@ export default class Wagon {
         }
 
     } updateTextPanel(text) {
-
+console.log(text)
         const panel = document.getElementById('text-panel');
         if (panel) {
             panel.innerText = text;
