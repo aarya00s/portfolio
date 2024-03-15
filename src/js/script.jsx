@@ -12,8 +12,7 @@ const ScriptComponent = () => {
     let boatMovement = false;
 let shouldFollow = false;
 let Mpressed = false;
-let touchDevice = true
-let lastTouchY = 0;
+
 
 // Function to handle mouse movement
 function handleMouseMove(event) {
