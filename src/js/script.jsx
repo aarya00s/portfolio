@@ -140,57 +140,51 @@ function toggleMPressed(Mpressed){
     Mpressed=!Mpressed;
     toggleJoystick(Mpressed);
 }
-function toggleJoystick(enabled) {
-    // Clean up if disabling and joystick already exists
-    if (!enabled && joystick) {
-        joystick.destroy();
-        joystick = null;
-        return;
+function toggleJoystick(event) {
+    var size=150;
+    if(window.innerWidth<600){
+        size=100;
     }
-
-    // Proceed to create the joystick if enabled
-    if (enabled) {
-        let size = 150;
-        if(window.innerWidth < 600){
-            size = 100;
-        }
    
-        var sampleJoystick = {
-            zone: document.getElementById("text-panel"),
-            mode: 'dynamic',
-            position: { left: '50%', top: '50%' },
-            size: size,
-            color: 'black'
-        };
+    var sampleJoystick = {
+        zone: document.getElementById("text-panel"),
+        mode:'dynamic',
+        position: {
+          left: '50%',
+          top: '50%'
+        },
+        size: size,
+        color: 'black'
+    };
+    
+    var joystick = nipplejs.create(sampleJoystick);
 
-        // Ensure we don't create multiple instances
-        if (!joystick) {
-            joystick = nipplejs.create(sampleJoystick);
 
-            joystick.on('move', function (evt, data) {
-                if (!data.direction) return;
 
-                let deltaX = 0, deltaZ = 0;
-                var maxSpeed = 0.0008;
+    joystick.on('move', function (evt, data) {
+        if (!data.direction) return;
 
-                switch (data.direction.angle) {
-                    case 'up': deltaZ = maxSpeed; break;
-                    case 'down': deltaZ = -maxSpeed; break;
-                    case 'left': deltaX = -maxSpeed; break;
-                    case 'right': deltaX = maxSpeed; break;
-                    default: break;
-                }
+        let deltaX = 0, deltaZ = 0;
+        var maxSpeed = 0.0008;
 
-                // Assuming `experience` is globally accessible or passed correctly
-                experience.world.wagon.boatProgress+=deltaZ
-                    experience.world.wagon.horizontalProgress += deltaX;
-                    experience.world.wagon.verticalProgress += deltaZ;
-            
-                experience.world.wagon.update();
-            });
+        switch (data.direction.angle) {
+            case 'up': deltaZ = maxSpeed; break;
+            case 'down': deltaZ = -maxSpeed; break;
+            case 'left': deltaX = -maxSpeed; break;
+            case 'right': deltaX = maxSpeed; break;
+            default: break;
         }
-    }
-}
+
+        // Assuming `experience` is globally accessible or passed correctly
+        experience.world.wagon.boatProgress+=deltaZ
+            experience.world.wagon.horizontalProgress += deltaX;
+            experience.world.wagon.verticalProgress += deltaZ;
+    
+        experience.world.wagon.update();
+    });
+ }
+    
+
 // if (window.innerWidth < 600) {
 //     // Listen for scroll on touch devices
 
