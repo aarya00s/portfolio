@@ -53,7 +53,7 @@ export default class Experience {
 	setDebug() {
 		if (this.config.debug) {
 			this.debug = new Pane({
-				title: 'Panel',
+				title: 'Fun Stuff!!',
 				expanded: false,
 			})
 			
@@ -68,7 +68,7 @@ export default class Experience {
 			this.debug.waterFolder =  this.debug.addFolder({title:'Water',expanded: false })
 			this.debug.skyFolder=  this.debug.addFolder({title:'Ocean',expanded: false})
 			// this.debug.worldFolder = this.debug.addFolder({ title: 'World' })
-			this.debug.cameraFolder = this.debug.addFolder({ title: 'Camera',expanded: false })
+			// this.debug.cameraFolder = this.debug.addFolder({ title: 'Camera',expanded: false })
 		
 			// this.debug.renderFolder = this.debug.addFolder({
 			// 	title: 'Post-Processing',

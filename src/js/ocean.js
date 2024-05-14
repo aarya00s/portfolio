@@ -166,7 +166,7 @@
                         this.toggleFreeMoving();
                     } }
                 );
-                    this.stats.skyFolder.addBinding(this.parameters, 'boatMovement', { label: 'Boat Movement' }).on(() =>
+                    this.stats.skyFolder.addBinding(this.parameters, 'boatMovement', { label: 'Look Around' }).on(() =>
                         'onChange', () => {
                     
                             this.parameters.boatMovement = !this.parameters.boatMovement;
