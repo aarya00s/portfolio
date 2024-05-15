@@ -35,6 +35,7 @@ export default class Wagon {
             "trinity": "Recently graduated from Trinity College with a Bachelor's in Engineering."
         }; // Initialize a progress variable to control movement along the path.
     }
+
     addModel() {
         this.models = {};
         const modelNames = [
@@ -144,7 +145,7 @@ export default class Wagon {
         let boatPosition;
         // Update the boat's position along the path 
 
-        if (!this.isFreeMoving) {
+        if (!this.isFreeMoving && this.boatPath) {
             // Following the predefined path
             boatPosition = this.boatPath.getPoint(this.boatProgress % 1);
         }
@@ -153,7 +154,7 @@ export default class Wagon {
             // Assuming boatProgress has been updated based on input
             this.deltaPosition = this.calculateDeltaPosition(this.horizontalProgress, this.verticalProgress);
             boatPosition = new THREE.Vector3().addVectors(this.models.boat.position, this.deltaPosition);
-      
+
 
         }
 
@@ -164,7 +165,7 @@ export default class Wagon {
             const offset = new THREE.Vector3(0, 0, 0); // Adjust as needed
             var boatp = this.models.boat.position.clone();
             const desiredCameraPosition = boatp.add(offset);
- 
+
             // Smoothly interpolate the camera's position
             this.experience.camera.instance.position.lerp(desiredCameraPosition, 0.05); // Adjust the lerp factor for smoothness
 
@@ -182,23 +183,31 @@ export default class Wagon {
             Object.keys(this.models).forEach(modelName => {
                 const model = this.models[modelName];
 
-                if (model) {
 
-                    const distance = model.position.distanceTo(this.models.boat.position);
-                    if (distance < 100) {
 
-                        if (this.textMap[modelName]) {
-                            this.updateTextPanel(this.textMap[modelName])
-                            // remove comment to genrate flying fireflies text Add imports and 
-                            // this.fireflies.setTextAsFireflies(this.textMap[modelName], { ...this.models.boat.position, scale: 90 })
-                        }
+                const distance = model.position.distanceTo(this.models.boat.position);
+
+                if (modelName != "INDIA" && distance < 800) {
+                    console.log(modelName)
+                    if (this.textMap[modelName]) {
+                        
+                        this.updateTextPanel(this.textMap[modelName])
+                        // remove comment to genrate flying fireflies text Add imports and 
+                        // this.fireflies.setTextAsFireflies(this.textMap[modelName], { ...this.models.boat.position, scale: 90 })
                     }
+                } else if (modelName == " INDIA" && distance < 400) {
+                    if (this.textMap[modelName]) {
+                        this.updateTextPanel(this.textMap[modelName])
+                        // remove comment to genrate flying fireflies text Add imports and 
+                        // this.fireflies.setTextAsFireflies(this.textMap[modelName], { ...this.models.boat.position, scale: 90 })
+                    }
+
                 }
             });
         }
 
     } updateTextPanel(text) {
-console.log(text)
+        console.log(text)
         const panel = document.getElementById('text-panel');
         if (panel) {
             panel.innerText = text;

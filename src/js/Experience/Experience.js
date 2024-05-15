@@ -4,7 +4,7 @@ import { Pane } from 'tweakpane'
 import Time from './Utils/Time.js'
 import Sizes from './Utils/Sizes.js'
 
-import Config from './Config.js'	
+import Config from './Config.js'
 import Resources from './Resources.js'
 import Renderer from './Renderer.js'
 import Camera from './Camera.js'
@@ -29,7 +29,7 @@ export default class Experience {
 			return
 		}
 		this.config = new Config(this.targetElement)
-		
+
 		this.time = new Time()
 		this.sizes = new Sizes()
 
@@ -39,69 +39,68 @@ export default class Experience {
 		this.setCamera()
 		this.setRenderer()
 		this.setResources()
-		
+
 		this.setLoader()
-		
+
 		this.setWorld()
-		
+
 		this.setRaycaster()
 		this.setEvents()
-        this.update()
-		
+		this.update()
+
 	}
 
 	setDebug() {
 		if (this.config.debug) {
-			this.debug = new Pane({
-				title: 'Fun Stuff!!',
-				expanded: false,
-			})
-			
-			this.debug.containerElem_.classList.add("panel")
-			// this.debug.containerElem__.className += "  panel"
-			this.debug.containerElem_.style.width = '20%'
-			this.debug.containerElem_.draggable= true;
+			// Create a container for the debug panes
+			this.debugContainer = document.createElement('div');
+			this.debugContainer.style.display = 'flex';
+			this.debugContainer.style.flexDirection = 'row';
+			this.debugContainer.style.position = 'realtive';
+			this.debugContainer.style.top = '10px';
+			this.debugContainer.style.right = '10px';
+			document.body.appendChild(this.debugContainer);
 
-		}
-		if (this.debug) {
-		
-			this.debug.waterFolder =  this.debug.addFolder({title:'Water',expanded: false })
-			this.debug.skyFolder=  this.debug.addFolder({title:'Ocean',expanded: false})
-			// this.debug.worldFolder = this.debug.addFolder({ title: 'World' })
-			// this.debug.cameraFolder = this.debug.addFolder({ title: 'Camera',expanded: false })
-		
-			// this.debug.renderFolder = this.debug.addFolder({
-			// 	title: 'Post-Processing',
-			// 	expanded: false
-			// })
-			if(this.debug) {
-				// Listen for resize events
-				window.addEventListener('resize', () => {
-					this.adjustPanelSize();
-				});
+			// Create separate panes for Ocean and Water
+
+
+			this.waterPane = new Pane({ title: 'Water', expanded: false });
+			this.waterPane.containerElem_.style.width = '90px';
+			this.waterPane.containerElem_.classList.add("panel");
+			this.oceanPane = new Pane({ title: 'Ocean', expanded: false });
+			this.oceanPane.containerElem_.style.width = '90px';
+			this.oceanPane.containerElem_.classList.add("panel");
+			this.oceanPane.containerElem_.style.marginRight = '90px'; // Add margin between panes
+
+			// Add the panes to the debug container
+
 			
-				// Initial adjustment
-				this.adjustPanelSize();
-			}
-			var width = window.innerWidth
-		
-			if(width<600){
-				width='60%'
-			}
-			else if (width<450) {
-				width='40%'
-			} 
-			else width ='80%';
-	
+			this.debugContainer.appendChild(this.oceanPane.containerElem_);
+			this.debugContainer.appendChild(this.waterPane.containerElem_);
+
+
+			// Add inputs or settings specific to each pane if necessary
+			// Example:
+			// this.oceanPane.addInput(this.config, 'oceanSetting', { label: 'Ocean Setting' });
+			// this.waterPane.addInput(this.config, 'waterSetting', { label: 'Water Setting' });
+
+			// Remove other debug panes or folders to avoid conflicts
+			// this.cameraPane = new Pane({ title: 'Camera', expanded: false });
+			// this.cameraPane.containerElem_.style.width = '320px';
+
+			// this.renderPane = new Pane({
+			//     title: 'Post-Processing',
+			//     expanded: false
+			// });
+			// this.renderPane.containerElem_.style.width = '320px';
 		}
-	document.getElementsByClassName('tp-rotv')[0].style.width=width
 	}
 	adjustPanelSize() {
 		const maxWidth = 320; // Maximum width of the panel
 		const viewportWidth = window.innerWidth;
 		const panelWidthPercentage = 0.8; // Adjust this value as needed
-	
-		if(viewportWidth < 768) { // Consider as a mobile device threshold
+
+		if (viewportWidth < 768) { // Consider as a mobile device threshold
 			const responsiveWidth = Math.min(viewportWidth * panelWidthPercentage, maxWidth);
 			this.debug.containerElem_.style.width = `${responsiveWidth}px`;
 		} else {
@@ -114,19 +113,19 @@ export default class Experience {
 		// if (this.config.debug) this.stats = new Stats(true)
 	}
 
-	setScene() { 
-		this.scene = new THREE.Scene(); 
+	setScene() {
+		this.scene = new THREE.Scene();
 		this.scene.background = null; // Ensure the scene's background is transparent
 	}
-	
+
 	setCamera() { this.camera = new Camera() }
 
 	setRenderer() {
-			this.renderer = new Renderer({ rendererInstance: this.rendererInstance, alpha: true });
-			this.targetElement.appendChild( this.renderer.instance.domElement );
-		}
-		
-	
+		this.renderer = new Renderer({ rendererInstance: this.rendererInstance, alpha: true });
+		this.targetElement.appendChild(this.renderer.instance.domElement);
+	}
+
+
 
 	setResources() { this.resources = new Resources(assets) }
 
@@ -154,7 +153,41 @@ export default class Experience {
 
 	update() {
 		if (this.stats) this.stats.update()
+		if (this.oceanPane && this.waterPane) {
 
+			const defaultWidth = '90px';
+			const expandedWidth = '360px';
+
+			const collapsePane = (pane) => {
+				pane.expanded = false;
+				if(pane==this.waterPane){this.oceanPane.containerElem_.style.marginRight = '90px';}
+				pane.containerElem_.style.width = defaultWidth;
+			};
+			const expandPane = (pane) => {
+				pane.expanded = true;
+				if(pane==this.waterPane){this.oceanPane.containerElem_.style.marginRight = '180px';}
+				pane.containerElem_.style.width = expandedWidth;
+			};
+			if (this.oceanPane.expanded) {
+				expandPane(this.oceanPane);
+				if (this.waterPane.expanded) {
+					collapsePane(this.waterPane);
+				}
+			}
+			else {
+				collapsePane(this.oceanPane);
+			}
+
+			if (this.waterPane.expanded) {
+				expandPane(this.waterPane);
+				if (this.oceanPane.expanded) {
+					collapsePane(this.oceanPane);
+				}
+			}
+			else {
+				collapsePane(this.waterPane);
+			}
+		}
 		this.camera.update()
 
 		if (this.world) this.world.update()

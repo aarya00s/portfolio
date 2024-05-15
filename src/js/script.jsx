@@ -12,33 +12,43 @@ const ScriptComponent = () => {
         let boatMovement = false;
         let shouldFollow = true;
         let Mpressed = false;
-
-
+        let automaticMovement = true;
+        let animationFrameId;
+        let intervalId;
         // Function to handle mouse movement
         function handleMouseMove(event) {
-
             if (!experience.world.ocean && !experience.world.wagon) return;
-
-            experience.world.wagon.isFreeMoving = experience.world.ocean.parameters.isFreeMoving
-
-            const boatMovementChanged = experience.world.ocean.parameters.boatMovement !== boatMovement;
-            boatMovement = experience.world.ocean.parameters.boatMovement;
-            console.log(experience.world.ocean.parameters.boatMovement);
-            // toggleJoystick(experience.world.ocean.parameters.boatMovement);
-            let movementY = 0;
-            // experience.camera.setMode('follow');
-            // experience.camera.setFollowTarget(experience.world.wagon.models.boat);
-            // 
-            if (boatMovementChanged) {
-
-                document.dispatchEvent(new CustomEvent('MoveBoat', { detail: { event: event } }));
-                const currentPosition = new THREE.Vector3().copy(experience.world.wagon.models.boat.position);
+            if (automaticMovement) {
+                experience.camera.setMode('follow');
+                experience.camera.setFollowTarget(experience.world.wagon.models.boat);
+            } if (experience.world.ocean.parameters.automaticMovement !== automaticMovement) {
+                if (!experience.world.ocean.parameters.automaticMovement && automaticMovement) {
+                    const currentPosition = new THREE.Vector3().copy(experience.world.wagon.models.boat.position);
                     currentPosition.z += 10;
                     currentPosition.y += 2;
                     experience.camera.modes.debug.orbitControls.target.copy(currentPosition);
                     experience.camera.modes.debug.orbitControls.update();
                     experience.camera.setMode('debug');
+                }
+            }
+            experience.world.wagon.isFreeMoving = experience.world.ocean.parameters.isFreeMoving
 
+            const boatMovementChanged = experience.world.ocean.parameters.boatMovement !== boatMovement;
+            const automaticMovementChanged = experience.world.ocean.parameters.automaticMovement !== automaticMovement;
+
+            boatMovement = experience.world.ocean.parameters.boatMovement;
+            automaticMovement = experience.world.ocean.parameters.automaticMovement;
+
+            let movementY = 0;
+
+            if (boatMovementChanged) {
+                document.dispatchEvent(new CustomEvent('MoveBoat', { detail: { event: event } }));
+                const currentPosition = new THREE.Vector3().copy(experience.world.wagon.models.boat.position);
+                currentPosition.z += 10;
+                currentPosition.y += 2;
+                experience.camera.modes.debug.orbitControls.target.copy(currentPosition);
+                experience.camera.modes.debug.orbitControls.update();
+                experience.camera.setMode('debug');
             }
 
             if (boatMovement) {
@@ -49,24 +59,22 @@ const ScriptComponent = () => {
             }
         }
 
-        // Function to move the boat based on mouse movement
-        // Create a joystick after the DOM has loaded
-
-
-
-
+        function moveBoat() {
+            if (automaticMovement && experience.world.wagon) {
+                experience.world.wagon.boatProgress += 0.00006; // Adjust the speed as necessary
+                experience.world.wagon.update();
+            }
+            animationFrameId = requestAnimationFrame(moveBoat);
+        }
 
         // Function to toggle camera follow mode
         function toggleFollowMode(event) {
             if (event.key === 'm' || event.key === 'M') {
                 shouldFollow = !shouldFollow;
-                console.log(shouldFollow);
                 if (shouldFollow) {
                     experience.camera.setMode('follow');
                     experience.camera.setFollowTarget(experience.world.wagon.models.boat);
                 } else {
-                    console.log("here");
-
                     const currentPosition = new THREE.Vector3().copy(experience.world.wagon.models.boat.position);
                     currentPosition.z += 10;
                     currentPosition.y += 2;
@@ -81,16 +89,13 @@ const ScriptComponent = () => {
             }
         }
 
-
         let joystick = null; // Keep a reference to the joystick
         function toggleMPressed(Mpressed) {
             Mpressed = !Mpressed;
             toggleJoystick(Mpressed);
         }
-        function toggleJoystick(event) {
-            console.log("here")
-            
 
+        function toggleJoystick(event) {
             var size = 150;
             if (window.innerWidth < 600) {
                 size = 100;
@@ -116,7 +121,7 @@ const ScriptComponent = () => {
 
             joystick.on('move', function (evt, data) {
                 experience.camera.setMode('follow');
-            experience.camera.setFollowTarget(experience.world.wagon.models.boat);
+                experience.camera.setFollowTarget(experience.world.wagon.models.boat);
                 if (!data.direction) return;
 
                 let deltaX = 0, deltaZ = 0;
@@ -137,30 +142,21 @@ const ScriptComponent = () => {
                 experience.world.wagon.update();
             });
         }
-
-
-        // if (window.innerWidth < 600) {
-        //     // Listen for scroll on touch devices
-
-        //     document.ontouchmove = function (event) {
-        //         handleMouseMove(event)
-        //     }
-        //     console.log(document)
-        // } else {
-        //     // Listen for mouse movement on non-touch devices
-        //     console.log(window)
-        //     document.addEventListener('mousemove', handleMouseMove);
-        // }
+        intervalId = setInterval(handleMouseMove, 1000);
         // Attach event listeners
-        document.addEventListener('mousemove', handleMouseMove);
+        // document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('click', toggleJoystick);
         document.addEventListener('MoveBoat', toggleFollowMode);
-        document.addEventListener('keypress', toggleFollowMode)
+        document.addEventListener('keypress', toggleFollowMode);
 
+        // Start the automatic boat movement
+        moveBoat();
 
         // Cleanup function
         return () => {
-            document.removeEventListener('mousemove', handleMouseMove);
+            clearInterval(intervalId);
+            cancelAnimationFrame(animationFrameId);
+            // document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('click', toggleJoystick);
             document.removeEventListener('movetheboat', toggleJoystick);
             document.removeEventListener('MoveBoat', toggleFollowMode);
