@@ -29,9 +29,9 @@ export default class Wagon {
         this.verticalProgress = 0;
         this.maxBounds = { minX: -800, maxX: 800, minZ: -800, maxZ: 800 };
         this.textMap = {
-            'Gate1': "Welcome aboard! Press 'M' or interact with the control panel above For a hidden surprise, try clicking around the bottom of Welcome aboard! Interact with the control panel above to look around. For a hidden surprise, try clicking around the bottom of the screen to discover and use the joystick for navigation. You can click the Menu icon and explore other pages. Enjoy the voyage!the screen to discover and use the joystick for navigation. You can click the Menu icon and Explore other features. Enjoy the voyage!",
+            'Gate1': "Completed internships as a Full Stack Engineer and Front-End Intern in India.",
             'Gate2': "Proficient in Python, C++, C, Java, JavaScript, and more.",
-            "INDIA": "Completed internships as a Full Stack Engineer and Front-End Intern in India.",
+            "INDIA": "Welcome aboard! Press 'M' or interact with the control panel above For a hidden surprise, try clicking around the bottom of Welcome aboard! Interact with the control panel above to look around. For a hidden surprise, try clicking around the bottom of the screen to discover and use the joystick for navigation. You can click the Menu icon and explore other pages. Enjoy the voyage!the screen to discover and use the joystick for navigation. You can click the Menu icon and Explore other features. Enjoy the voyage!",
             "trinity": "Recently graduated from Trinity College with a Bachelor's in Engineering."
         }; // Initialize a progress variable to control movement along the path.
     }
