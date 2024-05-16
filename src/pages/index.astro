@@ -1313,7 +1313,7 @@ import ScriptComponent from "../js/script.jsx";
 				height: 100%;
 				text-align: right; /* Align text to the right */
 				/*padding-left: 20px; /* Add some padding for spacing */
-			
+
 				color: white; /* Text color */
 				text-decoration: none; /* Remove underline */
 				font-family: monospace;
@@ -1325,7 +1325,7 @@ import ScriptComponent from "../js/script.jsx";
 				transform-origin: right center; /* Set the origin for the transformation */
 				overflow: hidden;
 				margin-top: 23px;
-			
+
 				transition:
 					transform 2s,
 					font-size 2s,
@@ -1360,54 +1360,50 @@ import ScriptComponent from "../js/script.jsx";
 				}
 			}
 
-			/* Float/Breathe Animation */
-			@keyframes float {
-				0% {
-					transform: translateY(0);
+			/* Responsive adjustments */
+			@media (max-width: 768px) {
+				li.leftbutton {
+					width: 140px;
+					height: 80px;
+					left: -120px;
 				}
-				50% {
-					transform: translateY(-10px);
+
+				li.leftbutton:hover {
+					width: 220px;
+					height: 80px;
 				}
-				100% {
-					transform: translateY(0);
+
+				li.leftbutton a {
+					font-size: 14px;
+					line-height: 113px;
+				}
+
+				li.leftbutton:hover a {
+					font-size: 20px;
+					line-height: 80px;
 				}
 			}
 
-			.base {
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
-			}
+			@media (max-width: 480px) {
+				li.leftbutton {
+					width: 120px;
+					height: 60px;
+					left: -100px;
+				}
 
-			/* Float/Breathe Animation */
-			@keyframes float {
-				0% {
-					transform: translateY(0);
+				li.leftbutton:hover {
+					width: 180px;
+					height: 60px;
 				}
-				50% {
-					transform: translateY(-10px);
-				}
-				100% {
-					transform: translateY(0);
-				}
-			}
 
-			.base {
-				display: flex;
-				flex-direction: column;
-				align-items: flex-start;
-			}
+				li.leftbutton a {
+					font-size: 12px;
+					line-height: 93px;
+				}
 
-			/* Float/Breathe Animation */
-			@keyframes float {
-				0% {
-					transform: translateY(0);
-				}
-				50% {
-					transform: translateY(-10px);
-				}
-				100% {
-					transform: translateY(0);
+				li.leftbutton:hover a {
+					font-size: 18px;
+					line-height: 60px;
 				}
 			}
 		</style>
