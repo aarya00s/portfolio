@@ -1278,8 +1278,6 @@ import ScriptComponent from "../js/script.jsx";
 				height: 35%;
 			}
 
-			/* Set the background of the body to the uploaded image */
-			
 			li.leftbutton {
 				background: linear-gradient(
 					135deg,
@@ -1289,32 +1287,90 @@ import ScriptComponent from "../js/script.jsx";
 					/* Pink */ #ff8a80 80%,
 					/* Pink */ #fff6a4 100% /* Yellow */
 				); /* Gradient from dark blue to yellow */
-				margin: 5px 0; /* Adjust margin */
+				margin: 20px 0; /* Increase margin */
 				opacity: 0.8;
 				width: 170px;
-				height: 60px;
+				height: 100px; /* Increase height */
 				position: relative; /* Ensure left positioning works */
-				left: -20px; /* Position the element */
+				left: -150px; /* Position the element */
 				-webkit-transition: 2s;
 				transition: 2s; /* Add transition for smooth effect */
-				border-radius: 15px; /* Make the corners curved */
+				border-radius: 20px; /* Make the corners curved */
 				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Add a soft shadow */
 				animation: float 4s ease-in-out infinite; /* Add float animation */
+				overflow: hidden;
 			}
 
 			li.leftbutton:hover {
 				width: 260px;
+				height: 100px; /* Maintain the height on hover */
 			}
 
 			li.leftbutton a {
 				display: block;
+				align-items: center;
 				width: 100%;
 				height: 100%;
-				text-align: center;
-				line-height: 50px; /* Vertically center the text */
+				text-align: right; /* Align text to the right */
+				/*padding-left: 20px; /* Add some padding for spacing */
+			
 				color: white; /* Text color */
 				text-decoration: none; /* Remove underline */
 				font-family: monospace;
+				font-size: 16px; /* Initial font size */
+				/* padding-top: 20px; */
+				line-height: 120px;
+				padding-bottom: -20px;
+				transform: rotate(90deg); /* Rotate text vertically */
+				transform-origin: right center; /* Set the origin for the transformation */
+				overflow: hidden;
+				margin-top: 20px;
+				margin-bottom: 0px;
+				transition:
+					transform 2s,
+					font-size 2s,
+					line-height 2s; /* Add transition for transform and font size */
+			}
+
+			li.leftbutton:hover a {
+				font-size: 24px; /* Increase font size on hover */
+				line-height: 100px; /* Adjust line height for horizontal text */
+				transform: rotate(0deg); /* Rotate text back to horizontal */
+				padding-right: 20px;
+				transform-origin: left center;
+				margin-top: 0;
+			}
+
+			.base {
+				display: flex;
+				flex-direction: column;
+				align-items: flex-start;
+			}
+
+			/* Float/Breathe Animation */
+			@keyframes float {
+				0% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-10px);
+				}
+				100% {
+					transform: translateY(0);
+				}
+			}
+
+			/* Float/Breathe Animation */
+			@keyframes float {
+				0% {
+					transform: translateY(0);
+				}
+				50% {
+					transform: translateY(-10px);
+				}
+				100% {
+					transform: translateY(0);
+				}
 			}
 
 			.base {
@@ -1373,21 +1429,21 @@ import ScriptComponent from "../js/script.jsx";
 					<a
 						href="https://aarya00s.github.io/quiz/"
 						target="_blank"
-						rel="noopener">Quiz</a
+						rel="noopener">Resume</a
 					>
 				</li>
 				<li class="leftbutton">
 					<a
 						href="https://aarya00s.github.io/check/"
 						target="_blank"
-						rel="noopener">Check</a
+						rel="noopener">Custom</a
 					>
 				</li>
 				<li class="leftbutton">
 					<a
 						href="https://aaryascontactme.netlify.app/"
 						target="_blank"
-						rel="noopener">Contact Me</a
+						rel="noopener">Contact</a
 					>
 				</li>
 			</ul>
