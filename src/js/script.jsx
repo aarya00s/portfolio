@@ -61,7 +61,7 @@ const ScriptComponent = () => {
 
         function moveBoat() {
             if (automaticMovement && experience.world.wagon) {
-                experience.world.wagon.boatProgress += 0.00006; // Adjust the speed as necessary
+                experience.world.wagon.boatProgress += 0.00004; // Adjust the speed as necessary
                 experience.world.wagon.update();
             }
             animationFrameId = requestAnimationFrame(moveBoat);
@@ -71,6 +71,7 @@ const ScriptComponent = () => {
         function toggleFollowMode(event) {
             if (event.key === 'm' || event.key === 'M') {
                 shouldFollow = !shouldFollow;
+
                 if (shouldFollow) {
                     experience.camera.setMode('follow');
                     experience.camera.setFollowTarget(experience.world.wagon.models.boat);

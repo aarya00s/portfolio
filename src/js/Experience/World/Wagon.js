@@ -29,10 +29,10 @@ export default class Wagon {
         this.verticalProgress = 0;
         this.maxBounds = { minX: -800, maxX: 800, minZ: -800, maxZ: 800 };
         this.textMap = {
-            'Gate1': "Completed internships as a Full Stack Engineer and Front-End Intern in India.",
-            'Gate2': "Proficient in Python, C++, C, Java, JavaScript, and more.",
-            "INDIA": "Welcome aboard! Press 'M' or interact with the control panel above For a hidden surprise, try clicking around the bottom of Welcome aboard! Interact with the control panel above to look around. For a hidden surprise, try clicking around the bottom of the screen to discover and use the joystick for navigation. You can click the Menu icon and explore other pages. Enjoy the voyage!the screen to discover and use the joystick for navigation. You can click the Menu icon and Explore other features. Enjoy the voyage!",
-            "trinity": "Recently graduated from Trinity College with a Bachelor's in Engineering."
+            'gate1Cube': "Welcome aboard! Press 'M' or interact with the control panel above For a hidden surprise, try clicking around the bottom of Welcome aboard! Interact with the control panel above to look around. For a hidden surprise, try clicking around the bottom of the screen to discover and use the joystick for navigation. You can click the Menu icon and explore other pages. Enjoy the voyage!the screen to discover and use the joystick for navigation. You can click the Menu icon and Explore other features. Enjoy the voyage!",
+            'gate2Cube': "Proficient in Python, C++, C, Java, JavaScript, and more.",
+            "indiaCube": "Completed internships as a Full Stack Engineer and Front-End Intern in India.",
+            "trinityCube": "Recently graduated from Trinity College with a Bachelor's in Engineering."
         }; // Initialize a progress variable to control movement along the path.
     }
 
@@ -45,7 +45,11 @@ export default class Wagon {
             "row1",
             "row2",
             "INDIA",
-            "trinity"
+            "trinity",
+            "gate1Cube",
+            "gate2Cube",
+            "indiaCube",
+            "trinityCube"
         ];
         // Manually mapping model names to texture packs
         const textureMap = {
@@ -144,20 +148,17 @@ export default class Wagon {
     update() {
         let boatPosition;
         // Update the boat's position along the path 
-
+    
         if (!this.isFreeMoving && this.boatPath) {
             // Following the predefined path
             boatPosition = this.boatPath.getPoint(this.boatProgress % 1);
-        }
-        else {
+        } else {
             // Free-moving, adjust boatPosition based on the current position plus some delta (boatProgress)
             // Assuming boatProgress has been updated based on input
             this.deltaPosition = this.calculateDeltaPosition(this.horizontalProgress, this.verticalProgress);
             boatPosition = new THREE.Vector3().addVectors(this.models.boat.position, this.deltaPosition);
-
-
         }
-
+    
         if (this.models.boat) {
             boatPosition.x = Math.max(this.maxBounds.minX, Math.min(boatPosition.x, this.maxBounds.maxX));
             boatPosition.z = Math.max(this.maxBounds.minZ, Math.min(boatPosition.z, this.maxBounds.maxZ));
@@ -165,10 +166,10 @@ export default class Wagon {
             const offset = new THREE.Vector3(0, 0, 0); // Adjust as needed
             var boatp = this.models.boat.position.clone();
             const desiredCameraPosition = boatp.add(offset);
-
+    
             // Smoothly interpolate the camera's position
             this.experience.camera.instance.position.lerp(desiredCameraPosition, 0.05); // Adjust the lerp factor for smoothness
-
+    
             // Make the camera look at the boat
             this.experience.camera.instance.lookAt(desiredCameraPosition);
             [this.models.row1, this.models.row2].forEach(row => {
@@ -180,34 +181,32 @@ export default class Wagon {
                     row.rotation.x = this.rowRotationAngle;
                 }
             });
+    
+            let closestModelName = null;
+            let minDistance = Infinity;
+    
             Object.keys(this.models).forEach(modelName => {
-                const model = this.models[modelName];
-
-
-
-                const distance = model.position.distanceTo(this.models.boat.position);
-
-                if (modelName != "INDIA" && distance < 800) {
-                    console.log(modelName)
-                    if (this.textMap[modelName]) {
-                        
-                        this.updateTextPanel(this.textMap[modelName])
-                        // remove comment to genrate flying fireflies text Add imports and 
-                        // this.fireflies.setTextAsFireflies(this.textMap[modelName], { ...this.models.boat.position, scale: 90 })
+                if (modelName.endsWith('Cube')) {
+                    const cube = this.models[modelName];
+                    const distance = cube.position.distanceTo(this.models.boat.position);
+    
+                    // Update the closest model if the current one is closer
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        closestModelName = modelName;
                     }
-                } else if (modelName == " INDIA" && distance < 400) {
-                    if (this.textMap[modelName]) {
-                        this.updateTextPanel(this.textMap[modelName])
-                        // remove comment to genrate flying fireflies text Add imports and 
-                        // this.fireflies.setTextAsFireflies(this.textMap[modelName], { ...this.models.boat.position, scale: 90 })
-                    }
-
                 }
             });
+    
+            if (closestModelName && minDistance < 800) { // Adjust the threshold as needed
+                if (this.textMap[closestModelName]) {
+                    this.updateTextPanel(this.textMap[closestModelName]);
+                }
+            }
         }
-
-    } updateTextPanel(text) {
-        console.log(text)
+    }
+    
+    updateTextPanel(text) {
         const panel = document.getElementById('text-panel');
         if (panel) {
             panel.innerText = text;
